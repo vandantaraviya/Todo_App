@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ): IconButton(
               onPressed: (){
                 if(authController.isLoading.value==true){
-                  authController.errorSnackbar(title: "Error", message: "Signup Processing ");
+                  authController.errorSnackbar(title: "Error", message: "Signup Processing......");
                 }else{
                   Get.back();
                 }
