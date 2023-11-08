@@ -10,6 +10,7 @@ import '../Auth_controller.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key, this.isEdit});
+
   final bool? isEdit;
 
   @override
@@ -64,7 +65,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     password: false,
                   ),
                   CustomTextField(
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5)),
                     textEditingController:
                         authController.addressSignInController,
                     hintText: AppString.signInPleaseAddress,
@@ -208,7 +210,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 22.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: AppColors.primaryColor, width: 0.8.w),
+                      border: Border.all(
+                          color: AppColors.primaryColor, width: 0.8.w),
                       image: DecorationImage(
                         fit: BoxFit.fill,
                         image: FileImage(
@@ -220,22 +223,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 )
               : widget.isEdit!
                   ? CachedNetworkImage(
-                    imageUrl: "${homeController.loginUser!.imageUrl}",
-                    imageBuilder: (context, imageProvider,) => Container(
-                      height: 10.h,
-                      width: 22.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(color: AppColors.primaryColor, width: 0.8.w),
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: imageProvider,
+                      imageUrl: "${homeController.loginUser!.imageUrl}",
+                      imageBuilder: (context, imageProvider,) => Container(
+                        height: 10.h,
+                        width: 22.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(
+                              color: AppColors.primaryColor, width: 0.8.w),
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: imageProvider,
+                          ),
                         ),
                       ),
-                    ),
-                    placeholder: (context, url,) =>  const CircularProgressIndicator(),
-                    fit: BoxFit.cover,
-                  ): Container(
+                      fit: BoxFit.cover,
+                      placeholder: (context,url,) => const CircularProgressIndicator(),
+                    )
+                  : Container(
                       height: 10.h,
                       width: 22.w,
                       decoration: BoxDecoration(
@@ -249,7 +254,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
-          Padding(
+              Padding(
             padding: EdgeInsets.only(top: 7.2.h, left: 6.5.h),
             child: InkWell(
               onTap: () {
