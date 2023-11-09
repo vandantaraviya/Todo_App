@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String imageFlutterLogo = 'assets/Image/flutter_logo.png';
   static const String imageUser = 'assets/Image/User.jpeg';
   static const String lottieLogInScreen = 'assets/Lottie/LogInScreen.json';
   static const String lottieSignUpScreen = 'assets/Lottie/SignUpScreen.json';

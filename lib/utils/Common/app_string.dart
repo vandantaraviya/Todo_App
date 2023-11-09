@@ -27,6 +27,7 @@ class AppString {
   static String pleaseDate = 'Please enter your Date';
   static String pleaseTask = 'Please enter your Task';
   static String pleaseDescription = 'Please enter your Description';
+  static String search = 'Search';
   static String add = 'Add';
   static String homescreen = 'Home Screen';
   static String addtask = 'Add Task';

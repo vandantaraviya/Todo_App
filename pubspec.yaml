@@ -51,6 +51,7 @@ dependencies:
   sizer:
   lottie:
   cached_network_image:
+  flutter_local_notifications:
 
 dev_dependencies:
   flutter_test:

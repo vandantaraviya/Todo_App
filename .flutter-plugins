@@ -13,6 +13,7 @@ firebase_database=/Users/mac/.pub-cache/hosted/pub.dev/firebase_database-10.3.3/
 firebase_database_web=/Users/mac/.pub-cache/hosted/pub.dev/firebase_database_web-0.2.3+11/
 firebase_storage=/Users/mac/.pub-cache/hosted/pub.dev/firebase_storage-11.4.1/
 firebase_storage_web=/Users/mac/.pub-cache/hosted/pub.dev/firebase_storage_web-3.6.12/
+flutter_local_notifications=/Users/mac/.pub-cache/hosted/pub.dev/flutter_local_notifications-16.1.0/
 flutter_plugin_android_lifecycle=/Users/mac/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/
 image_picker=/Users/mac/.pub-cache/hosted/pub.dev/image_picker-1.0.4/
 image_picker_android=/Users/mac/.pub-cache/hosted/pub.dev/image_picker_android-0.8.8+2/
