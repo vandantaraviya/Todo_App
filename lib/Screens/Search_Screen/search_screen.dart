@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:todo_app/Screens/Search_Screen/search_controller.dart';
-import 'package:todo_app/utils/Common/app_string.dart';
-import 'package:todo_app/utils/Common_Widgets/custom_textfiled.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -12,7 +8,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final SearchController searchController = Get.put(SearchController());
+  TextEditingController search = TextEditingController();
 
   List<String> contacts = [
       'adil',
@@ -65,7 +61,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              controller: searchController.search,
+              controller: search,
               onChanged: filterSearchResults,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search),
