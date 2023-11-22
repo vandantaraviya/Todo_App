@@ -30,6 +30,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     authController.passwordSignInController.clear();
     authController.bodSignInController.clear();
     authController.addressSignInController.clear();
+    authController.file = null;
+    print("----------Sign up And Edit Screen Dispose------------");
   }
 
   @override
@@ -58,8 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               },
               icon: Icon(Icons.arrow_back_outlined,size: 15.sp,),
           ),
-          title: Text(
-              widget.isEdit! ? AppString.editProfile : AppString.signUpScreen),
+          title: Text(widget.isEdit! ? AppString.editProfile : AppString.signUpScreen),
           centerTitle: true,
         ),
         body: Obx(() {
@@ -225,11 +226,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   child: Container(
                     height: 10.h,
-                    width: 22.w,
+                    width: 21.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      border: Border.all(
-                          color: AppColors.primaryColor, width: 0.8.w),
+                      border: Border.all(color: AppColors.primaryColor, width: 0.8.w),
                       image: DecorationImage(
                         fit: BoxFit.fill,
                         image: FileImage(
@@ -244,7 +244,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       imageUrl: "${homeController.loginUser!.imageUrl}",
                       imageBuilder: (context, imageProvider,) => Container(
                         height: 10.h,
-                        width: 22.w,
+                        width: 21.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(
@@ -260,7 +260,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     )
                   : Container(
                       height: 10.h,
-                      width: 22.w,
+                      width: 21.w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         color: AppColors.primaryColor,
@@ -273,14 +273,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
               Padding(
-            padding: EdgeInsets.only(top: 7.2.h, left: 6.5.h),
+            padding: EdgeInsets.only(top: 7.5.h, left: 6.5.h),
             child: InkWell(
               onTap: () {
                 controller.onTapSelectImage();
               },
               child: Container(
                   height: 3.h,
-                  width: 7.w,
+                  width: 6.w,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       color: AppColors.whiteColor,
