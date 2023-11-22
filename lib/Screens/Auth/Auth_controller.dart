@@ -49,7 +49,7 @@ class AuthController extends GetxController {
       Reference reference = storage.ref().child(userIdEdit);
       if(file!=null) {
         uploadTask = reference.putFile(
-            file!, SettableMetadata(contentType: "image/jpeg",));
+          file!, SettableMetadata(contentType: "image/jpg",));
         await Future.value(uploadTask);
         imageUrl = await reference.getDownloadURL();
       }else{
@@ -114,7 +114,7 @@ class AuthController extends GetxController {
         PrefService.setValue(PrefRes.userId, userId);
         print('========================$userId===================');
         Reference reference = storage.ref().child(userId);
-        uploadTask = reference.putFile(file!, SettableMetadata(contentType: "image/jpeg",));
+        uploadTask = reference.putFile(file!, SettableMetadata(contentType: "image/jpg",));
         await Future.value(uploadTask);
         var imageUrl = await reference.getDownloadURL();
         print('ImageURL:--${imageUrl.toString()}');
@@ -129,11 +129,8 @@ class AuthController extends GetxController {
             'imageUrl': imageUrl.toString(),
           });
         }
-        Get.snackbar(
-          "Successfully",
-          "Successfully Sign Up",
-          backgroundColor: AppColors.primaryColor,
-          colorText: AppColors.whiteColor,
+        Get.snackbar("Successfully","Successfully Sign Up",
+        backgroundColor: AppColors.primaryColor,colorText: AppColors.whiteColor,
         );
         Get.offAll(const HomeScreen());
       }else{
@@ -175,17 +172,17 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       print(e.code);
       if (e.code == 'network-request-failed') {
-        return errorSnackbar(title: 'error', message: 'No Internet Connection',);
+        return errorSnackbar(title: 'error', message: 'No Internet Connection.',);
       } else if (e.code == "wrong-password") {
-        return errorSnackbar(title: 'error',message: 'Please Enter correct password');
+        return errorSnackbar(title: 'error',message: 'Please Enter correct password.');
       } else if (e.code == 'user-not-found') {
         errorSnackbar(title: 'error', message:'Email not found');
       } else if (e.code == 'too-many-requests') {
-        return errorSnackbar(title: 'error',message: 'Too many attempts please try later');
+        return errorSnackbar(title: 'error',message: 'Too many attempts please try later.');
       } else if (e.code == 'unknwon') {
-        return errorSnackbar(title: 'error',message: 'Email and password field are required');
+        return errorSnackbar(title: 'error',message: 'Email and password field are required.');
       } else if (e.code == 'unknown') {
-        return errorSnackbar(title: 'error',message: 'Email and Password Fields are required');
+        return errorSnackbar(title: 'error',message: 'Email and Password Fields are required.');
       } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
         return errorSnackbar(title: 'error',message: 'No user found for that email.');
       } else {

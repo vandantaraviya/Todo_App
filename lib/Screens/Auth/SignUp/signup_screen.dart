@@ -74,8 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   profileImage(),
                   CustomTextField(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                     textEditingController: authController.userNameController,
                     hintText: AppString.signInPleaseUserName,
                     labelText: AppString.signInUserName,
@@ -84,10 +83,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     password: false,
                   ),
                   CustomTextField(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    textEditingController:
-                        authController.addressSignInController,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    textEditingController: authController.addressSignInController,
                     hintText: AppString.signInPleaseAddress,
                     labelText: AppString.signInAddress,
                     textInputAction: TextInputAction.next,
@@ -95,8 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     password: false,
                   ),
                   CustomTextField(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                     textEditingController: authController.bodSignInController,
                     hintText: AppString.signInPleaseBirthOfDate,
                     labelText: AppString.signInBirthOfDate,
@@ -122,8 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   CustomTextField(
                     maxLength: 10,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                     textEditingController: authController.phoneNumberController,
                     hintText: AppString.signInPleasePhoneNumber,
                     labelText: AppString.signInPhoneNumber,
@@ -136,8 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 1.h,
                   ),
                   CustomTextField(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                     textEditingController: authController.emailSignInController,
                     hintText: AppString.pleaseEmali,
                     labelText: AppString.email,
@@ -148,11 +142,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     height: 1.h,
                   ),
-                  CustomTextField(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    textEditingController:
-                        authController.passwordSignInController,
+                  widget.isEdit! ?
+                  SizedBox(
+                    height: 1.h,
+                  ):CustomTextField(
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    textEditingController: authController.passwordSignInController,
                     hintText: AppString.pleasePassword,
                     labelText: AppString.password,
                     textInputAction: TextInputAction.done,
@@ -169,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 5.h,
+                    height: 3.h,
                   ),
                   SizedBox(
                     height: 35,
@@ -203,7 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   )),
                   ),
                   SizedBox(
-                    height: 1.h,
+                    height: 3.h,
                   ),
                 ],
               ),
@@ -256,7 +251,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       fit: BoxFit.cover,
-                      placeholder: (context,url,) => const CircularProgressIndicator(),
+                      placeholder: (context,url,)=> CircularProgressIndicator(),
                     )
                   : Container(
                       height: 10.h,
@@ -273,8 +268,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
               Padding(
-            padding: EdgeInsets.only(top: 7.5.h, left: 6.5.h),
-            child: InkWell(
+              padding: EdgeInsets.only(top: 7.5.h, left: 6.5.h),
+              child: InkWell(
               onTap: () {
                 controller.onTapSelectImage();
               },

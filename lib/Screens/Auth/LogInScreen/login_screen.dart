@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo_app/Screens/ForgotPassword/forgot_password_screen.dart';
 import '../../../Services/Pref_Res.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/Common/app_string.dart';
@@ -107,8 +108,18 @@ class _LogInScreenState extends State<LogInScreen> {
                                 style: const TextStyle(color: Colors.white),
                               )),
                   ),
-                  SizedBox(
-                    height: 2.h,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: (){
+                          Get.to(forgotPasswordScreen());
+                        },
+                        child: Text(AppString.forgotpassword,
+                        style: TextStyle(
+                            color: AppColors.primaryColor, fontSize: 11.sp),
+                      ),),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +127,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       Text(
                         AppString.creatAccount,
                         style: TextStyle(
-                            color: AppColors.primaryColor, fontSize: 11.sp),
+                            color: AppColors.primaryColor, fontSize: 11.sp,fontWeight: FontWeight.bold),
                       ),
                       TextButton(
                         onPressed: () {

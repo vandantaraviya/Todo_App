@@ -18,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final HomeController homeController = Get.put(HomeController());
   final AddTaskcontroller addTaskcontroller = Get.put(AddTaskcontroller());
   final AuthController authController = Get.put(AuthController());
-  // NotificationService notificationService = NotificationService();
 
   @override
   void initState() {
@@ -26,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
     homeController.getdata();
     homeController.userdata();
   }
-
 
   @override
   void dispose() {

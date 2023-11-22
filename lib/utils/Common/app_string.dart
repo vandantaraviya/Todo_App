@@ -10,6 +10,8 @@ class AppString {
   static String pleasePassword = 'Please enter your Password';
   static String creatAccount = 'Create an account ?';
   static String signUp = 'Sign Up';
+  static String forgotpassword = 'Forgot Password ?';
+   static String forgotpasswordtitle = 'Forgot Password';
   static String signUpScreen = 'SignUp Screen';
   static String signInUserName = 'UserName';
   static String signInPhoneNumber = 'Phone';
