@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import '../../../Services/Pref_Res.dart';
 import '../../../utils/Common/app_string.dart';
 import '../../../utils/Common_Widgets/custom_textfiled.dart';
+import '../../ForgotPassword/forgot_password_screen.dart';
 import '../../HomeScreen/home_controller.dart';
 import '../Auth_controller.dart';
 
@@ -163,6 +164,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                     ),
                   ),
+                  widget.isEdit! ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 1.5.w,),
+                      TextButton(
+                        onPressed: (){
+                          Get.to(ForgotPasswordScreen());
+                        },
+                        child: Text(AppString.forgotPassword,
+                          style: TextStyle(
+                              color: AppColors.primaryColor, fontSize: 11.sp),
+                        ),),
+                    ],
+                  ): SizedBox(),
                   SizedBox(
                     height: 3.h,
                   ),

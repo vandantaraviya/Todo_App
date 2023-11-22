@@ -22,15 +22,21 @@ class AuthController extends GetxController {
   TextEditingController passwordSignInController = TextEditingController();
   TextEditingController addressSignInController = TextEditingController();
   TextEditingController bodSignInController = TextEditingController();
+  TextEditingController oldPassword = TextEditingController();
+  TextEditingController newPassword = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseStorage storage = FirebaseStorage.instance;
+  FirebaseAuth userPassword =  FirebaseAuth.instance;
   String userId = '';
   RxBool isLoading = false.obs;
   RxBool editLoading= false.obs;
   RxBool imageLoading= false.obs;
   RxBool loading = false.obs;
+  RxBool newPasswordLoading = false.obs;
   RxBool passwordVisible = true.obs;
+  RxBool newPasswordVisible = true.obs;
+  RxBool confirmpasswordVisible = true.obs;
   RxBool passwordVisibleSignIN = true.obs;
   final formKey = GlobalKey<FormState>();
   File? file;
@@ -38,6 +44,38 @@ class AuthController extends GetxController {
   PlatformFile? pickedFile;
   String imageUrl= '';
   String userIdEdit = PrefService.getString(PrefRes.userId);
+
+  newPasswordUpdate() async {
+    if (!forgotPasswordValidation()) {
+      return;
+    }
+    try{
+      newPasswordLoading.value = true;
+      final user = userPassword.currentUser;
+      // if (user!= null && !user.emailVerified) {
+      //   await user.sendEmailVerification();
+      //   print("Successfully sendEmail");
+      // }
+      user!.updatePassword(newPassword.text).then((_) async {
+        await firestore.collection(AppString.userCollection).doc(userIdEdit).update({
+          'password': newPassword.text,
+        }).then((value) {
+          Get.back();
+          newPassword.clear();
+        });
+        print(newPassword.text.toString());
+        print("Successfully changed password");
+        Get.back();
+      }).catchError((error){
+        print("Password can't be changed" + error.toString());
+      });
+    }catch(e){
+      print(e);
+      rethrow;
+    }finally{
+      newPasswordLoading.value = false;
+    }
+  }
 
 
   editUserData() async {
@@ -262,6 +300,18 @@ class AuthController extends GetxController {
       errorSnackbar(title: 'error',message: "Please enter password");
       return false;
     }else if(passwordSignInController.text.length<8){
+      errorSnackbar(title: 'error',message: "Password Must be more than 8 characters");
+      return false;
+    }
+    return true;
+  }
+
+  forgotPasswordValidation(){
+    Get.closeAllSnackbars();
+    if (newPassword.text.isEmpty) {
+      errorSnackbar(title: 'error',message: "Please enter password");
+      return false;
+    }else if(newPassword.text.length<8){
       errorSnackbar(title: 'error',message: "Password Must be more than 8 characters");
       return false;
     }
