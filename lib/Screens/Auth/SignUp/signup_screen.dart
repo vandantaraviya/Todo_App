@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
 import '../../../Services/Pref_Res.dart';
 import '../../../utils/Common/app_string.dart';
 import '../../../utils/Common_Widgets/custom_textfiled.dart';
@@ -188,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onPressed: () {
                           widget.isEdit!
                               ? authController.editUserData()
-                              : authController.signUpUser();
+                              : authController.signUpUser(context);
                           PrefService.setValue(PrefRes.loginUser, true);
                         },
                         style: ElevatedButton.styleFrom(

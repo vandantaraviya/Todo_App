@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/Screens/Auth/LogInScreen/login_screen.dart';
+import 'package:todo_app/Screens/Auth/Signup_Email_Verified/email_verified.dart';
 import '../../Services/Pref_Res.dart';
 import '../../utils/Common/app_string.dart';
 import '../HomeScreen/home_controller.dart';
@@ -47,6 +49,15 @@ class AuthController extends GetxController {
   PlatformFile? pickedFile;
   String imageUrl= '';
   String userIdEdit = PrefService.getString(PrefRes.userId);
+  Timer? timer;
+
+
+  emailVerfiy() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user!.emailVerified) {
+      await user.sendEmailVerification();
+    }
+  }
 
   resetPassword() async {
     try{
@@ -105,8 +116,7 @@ class AuthController extends GetxController {
       await firestore.collection(AppString.userCollection).doc(userIdEdit).update({
         'username': userNameController.text,
         'phone': phoneNumberController.text,
-        // 'email': emailSignInController.text,
-        // 'password': passwordSignInController.text,
+        'email': emailSignInController.text,
         'address': addressSignInController.text,
         'birth of date': bodSignInController.text,
         'imageUrl': imageUrl.toString(),
@@ -146,15 +156,18 @@ class AuthController extends GetxController {
   }
 
 
-  signUpUser() async {
+  signUpUser(BuildContext context) async {
     if (!signInValidation()) {
       return;
     }
     try {
       isLoading.value = true;
       if(file!=null) {
-        UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: emailSignInController.text,password: passwordSignInController.text,);
-        print(userCredential.user!.uid);
+        UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: emailSignInController.text,
+          password: passwordSignInController.text,);
+        await userCredential.user!.sendEmailVerification();
+        print(userCredential.user!.email);
         userId = userCredential.user!.uid;
         PrefService.setValue(PrefRes.userId, userId);
         print('========================$userId===================');
@@ -168,16 +181,22 @@ class AuthController extends GetxController {
             'username': userNameController.text,
             'phone': phoneNumberController.text,
             'email': emailSignInController.text,
-            // 'password': passwordSignInController.text,
             'address': addressSignInController.text,
             'birth of date': bodSignInController.text,
             'imageUrl': imageUrl.toString(),
           });
+          userNameController.clear();
+          phoneNumberController.clear();
+          emailSignInController.clear();
+          passwordSignInController.clear();
+          bodSignInController.clear();
+          addressSignInController.clear();
         }
-        Get.snackbar("Successfully","Successfully Sign Up",
+        Get.snackbar("Successfully","Successfully Registration ",
         backgroundColor: AppColors.primaryColor,colorText: AppColors.whiteColor,
         );
-        Get.offAll(const HomeScreen());
+        alertDialog(context,email: userCredential.user!.email,);
+        // Get.offAll( EmailVerified());
       }else{
         errorSnackbar(title: "Error", message: "Selected Your Profile Image");
       }
@@ -195,6 +214,34 @@ class AuthController extends GetxController {
     }
   }
 
+  alertDialog(BuildContext context,{String? email,}) {
+    User? user = FirebaseAuth.instance.currentUser;
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Email Verification'),
+            content: Text('Check your Email We have sent you a Email on ${email}'),
+            actions: <Widget>[
+            SizedBox(
+            height: 35,
+            width: 350,
+            child: ElevatedButton(
+                onPressed: () async {
+                  Get.offAll(LogInScreen());
+                  },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryColor,
+                ),
+                child: Text('OK',
+                  style: const TextStyle(color: Colors.white),
+                )),
+              ),
+            ],
+          );
+        });
+    }
+
   logIn({String? email, String? password}) async {
     if (!logInValidation()) {
       return;
@@ -203,19 +250,22 @@ class AuthController extends GetxController {
       loading.value = true;
       UserCredential user = await auth.signInWithEmailAndPassword(
           email: email.toString(), password: password.toString());
-      // if(user.user!.emailVerified){}
-      print("==============$email=========$password===========");
-      print(user.user!.uid);
-      userId = user.user!.uid;
-      PrefService.setValue(PrefRes.userId, userId);
-      print('========================$userId===================');
-      Get.snackbar(
-        "Successfully",
-        "Successfully Log In",
-        backgroundColor: AppColors.primaryColor,
-        colorText: AppColors.whiteColor,
-      );
-      Get.off(() => const HomeScreen());
+      if(user.user!.emailVerified) {
+        print("==============$email=========$password===========");
+        print(user.user!.uid);
+        userId = user.user!.uid;
+        PrefService.setValue(PrefRes.userId, userId);
+        print('========================$userId===================');
+        Get.snackbar(
+          "Successfully",
+          "Successfully Log In",
+          backgroundColor: AppColors.primaryColor,
+          colorText: AppColors.whiteColor,
+        );
+        Get.offAll(() => const HomeScreen());
+      }else{
+        errorSnackbar(title: 'error', message: 'Email Not Verifying.....',);
+      }
     } on FirebaseAuthException catch (e) {
       print(e.code);
       if (e.code == 'network-request-failed') {
@@ -235,6 +285,7 @@ class AuthController extends GetxController {
       } else {
         return errorSnackbar(title: 'error',message: e.code.toString());
       }
+      rethrow;
     } finally {
       loading.value = false;
     }
@@ -309,9 +360,13 @@ class AuthController extends GetxController {
       errorSnackbar(title: 'error',message: "Please enter password");
       return false;
     }else if(passwordSignInController.text.length<8){
-      errorSnackbar(title: 'error',message: "Password Must be more than 8 characters");
+      errorSnackbar(title: 'error',message: "Password Must be m ore than 8 characters");
       return false;
     }
+     // else if(auth.){
+     //   errorSnackbar(title: 'error',message: "Email Not Verified");
+     //   return false;
+     // }
     return true;
   }
 

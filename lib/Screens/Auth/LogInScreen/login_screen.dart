@@ -36,6 +36,7 @@ class _LogInScreenState extends State<LogInScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text("LogIn Screen"),
           centerTitle: true,
         ),
