@@ -8,6 +8,8 @@ class AppString {
   static String password = 'Password';
   static String newPassword = 'New Password';
   static String oldPassword = 'Old password';
+  static String resetPassword = 'Reset password';
+  static String receivePassword = 'Receive an email to reset your password';
   static String pleaseEmali = 'Please enter your Email';
   static String pleasePassword = 'Please enter your Password';
   static String pleaseChangePassword = 'Old Password';
@@ -15,6 +17,7 @@ class AppString {
   static String creatAccount = 'Create an account ?';
   static String signUp = 'Sign Up';
   static String forgotPassword = 'Forgot Password ?';
+  static String changePassword = 'change password ?';
    static String forgotPasswordTitle = 'Forgot Password';
   static String signUpScreen = 'SignUp Screen';
   static String signInUserName = 'UserName';

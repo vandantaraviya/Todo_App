@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
@@ -15,6 +16,7 @@ import '../HomeScreen/home_screen.dart';
 class AuthController extends GetxController {
   final HomeController homeController = Get.put(HomeController());
   TextEditingController emailController = TextEditingController();
+  TextEditingController resetEmailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -27,12 +29,13 @@ class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseStorage storage = FirebaseStorage.instance;
-  FirebaseAuth userPassword =  FirebaseAuth.instance;
+  User? user =  FirebaseAuth.instance.currentUser;
   String userId = '';
   RxBool isLoading = false.obs;
   RxBool editLoading= false.obs;
   RxBool imageLoading= false.obs;
   RxBool loading = false.obs;
+  RxBool resetloading = false.obs;
   RxBool newPasswordLoading = false.obs;
   RxBool passwordVisible = true.obs;
   RxBool newPasswordVisible = true.obs;
@@ -45,24 +48,30 @@ class AuthController extends GetxController {
   String imageUrl= '';
   String userIdEdit = PrefService.getString(PrefRes.userId);
 
+  resetPassword() async {
+    try{
+      resetloading.value = true;
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: resetEmailController.text.trim(),);
+      Get.back();
+      Get.snackbar('Email', 'Password Reset Email Sent');
+      resetEmailController.clear();
+    }on FirebaseException catch(e){
+      print(e.toString());
+      errorSnackbar(title: 'Error', message: e.toString());
+    }finally{
+      resetloading.value = false;
+    }
+  }
+
   newPasswordUpdate() async {
     if (!forgotPasswordValidation()) {
       return;
     }
     try{
       newPasswordLoading.value = true;
-      final user = userPassword.currentUser;
-      // if (user!= null && !user.emailVerified) {
-      //   await user.sendEmailVerification();
-      //   print("Successfully sendEmail");
-      // }
+      print('${user!.email}');
       user!.updatePassword(newPassword.text).then((_) async {
-        await firestore.collection(AppString.userCollection).doc(userIdEdit).update({
-          'password': newPassword.text,
-        }).then((value) {
-          Get.back();
-          newPassword.clear();
-        });
+        newPassword.clear();
         print(newPassword.text.toString());
         print("Successfully changed password");
         Get.back();
@@ -96,8 +105,8 @@ class AuthController extends GetxController {
       await firestore.collection(AppString.userCollection).doc(userIdEdit).update({
         'username': userNameController.text,
         'phone': phoneNumberController.text,
-        'email': emailSignInController.text,
-        'password': passwordSignInController.text,
+        // 'email': emailSignInController.text,
+        // 'password': passwordSignInController.text,
         'address': addressSignInController.text,
         'birth of date': bodSignInController.text,
         'imageUrl': imageUrl.toString(),
@@ -144,11 +153,9 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
       if(file!=null) {
-        UserCredential user = await auth.createUserWithEmailAndPassword(
-            email: emailSignInController.text,
-            password: passwordSignInController.text);
-        print(user.user!.uid);
-        userId = user.user!.uid;
+        UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: emailSignInController.text,password: passwordSignInController.text,);
+        print(userCredential.user!.uid);
+        userId = userCredential.user!.uid;
         PrefService.setValue(PrefRes.userId, userId);
         print('========================$userId===================');
         Reference reference = storage.ref().child(userId);
@@ -157,11 +164,11 @@ class AuthController extends GetxController {
         var imageUrl = await reference.getDownloadURL();
         print('ImageURL:--${imageUrl.toString()}');
         if(imageUrl!=null){
-          await firestore.collection(AppString.userCollection).doc(user.user!.uid).set({
+          await firestore.collection(AppString.userCollection).doc(userCredential.user!.uid).set({
             'username': userNameController.text,
             'phone': phoneNumberController.text,
             'email': emailSignInController.text,
-            'password': passwordSignInController.text,
+            // 'password': passwordSignInController.text,
             'address': addressSignInController.text,
             'birth of date': bodSignInController.text,
             'imageUrl': imageUrl.toString(),
@@ -182,6 +189,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       print(e);
+      rethrow;
     } finally {
       isLoading.value = false;
     }
@@ -195,6 +203,7 @@ class AuthController extends GetxController {
       loading.value = true;
       UserCredential user = await auth.signInWithEmailAndPassword(
           email: email.toString(), password: password.toString());
+      // if(user.user!.emailVerified){}
       print("==============$email=========$password===========");
       print(user.user!.uid);
       userId = user.user!.uid;

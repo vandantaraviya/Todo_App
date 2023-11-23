@@ -170,9 +170,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(width: 1.5.w,),
                       TextButton(
                         onPressed: (){
-                          Get.to(ForgotPasswordScreen());
+                          Get.to(ForgotPasswordScreen(isEdit: false,));
                         },
-                        child: Text(AppString.forgotPassword,
+                        child: Text(AppString.changePassword,
                           style: TextStyle(
                               color: AppColors.primaryColor, fontSize: 11.sp),
                         ),),

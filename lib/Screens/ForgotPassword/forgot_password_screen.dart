@@ -6,7 +6,12 @@ import 'package:todo_app/utils/Common/app_string.dart';
 import 'package:todo_app/utils/Common_Widgets/custom_textfiled.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  ForgotPasswordScreen({super.key,});
+  ForgotPasswordScreen({
+    super.key,
+    this.isEdit,
+  });
+
+  final bool? isEdit;
   AuthController authController = Get.put(AuthController());
 
   @override
@@ -23,6 +28,14 @@ class ForgotPasswordScreen extends StatelessWidget {
         body: Obx(() {
           return Column(
             children: [
+                 isEdit! ?
+                 Text(
+                    AppString.receivePassword,
+                    style: TextStyle(
+                        color: Colors.indigo,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold),
+                  ):SizedBox(),
               // CustomTextField(
               //   password: authController.newPasswordVisible.value,
               //   border: OutlineInputBorder(
@@ -32,7 +45,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               //   labelText: AppString.oldPassword,
               //   keyboardType: TextInputType.visiblePassword,
               //   textInputAction: TextInputAction.done,
-              //   readOnly: true,
+              //   readOnly: false,
               //   suffixIcon: IconButton(
               //     icon: Icon(authController.newPasswordVisible.value
               //         ? Icons.visibility_off
@@ -43,46 +56,80 @@ class ForgotPasswordScreen extends StatelessWidget {
               //     },
               //   ),
               // ),
-              CustomTextField(
-                password: authController.confirmpasswordVisible.value,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                textEditingController: authController.newPassword,
-                hintText: AppString.pleaseNewPassword,
-                labelText: AppString.newPassword,
-                keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.done,
-                readOnly: false,
-                suffixIcon: IconButton(
-                  icon: Icon(authController.confirmpasswordVisible.value
-                      ? Icons.visibility_off
-                      : Icons.visibility),
-                  onPressed: () {
-                    authController.confirmpasswordVisible.value =
-                    !authController.confirmpasswordVisible.value;
-                  },
-                ),
-              ),
-              SizedBox(height: 1.h,),
-              SizedBox(
-                height: 35,
-                width: 350,
-                child: ElevatedButton(
-                    onPressed: () {
-                      authController.newPasswordUpdate();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryColor,
-                    ),
-                    child: (authController.newPasswordLoading.value)
-                        ? const CircularProgressIndicator(
-                      color: Colors.white,
+              isEdit!
+                  ? CustomTextField(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      textEditingController:
+                          authController.resetEmailController,
+                      hintText: AppString.pleaseEmali,
+                      labelText: AppString.email,
+                      textInputAction: TextInputAction.next,
+                      readOnly: false,
+                      password: false,
                     )
-                        : Text(
-                      AppString.oldPassword,
-                      style: const TextStyle(color: Colors.white),
-                    )),
+                  : CustomTextField(
+                      password: authController.confirmpasswordVisible.value,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      textEditingController: authController.newPassword,
+                      hintText: AppString.pleaseNewPassword,
+                      labelText: AppString.newPassword,
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      readOnly: false,
+                      suffixIcon: IconButton(
+                        icon: Icon(authController.confirmpasswordVisible.value
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          authController.confirmpasswordVisible.value =
+                              !authController.confirmpasswordVisible.value;
+                        },
+                      ),
+                    ),
+              SizedBox(
+                height: 1.h,
               ),
+              isEdit!
+                  ? SizedBox(
+                      height: 35,
+                      width: 350,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            authController.resetPassword();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                          ),
+                          child: (authController.resetloading.value)
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  AppString.resetPassword,
+                                  style: const TextStyle(color: Colors.white),
+                                )),
+                    )
+                  : SizedBox(
+                      height: 35,
+                      width: 350,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            authController.newPasswordUpdate();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                          ),
+                          child: (authController.newPasswordLoading.value)
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  AppString.oldPassword,
+                                  style: const TextStyle(color: Colors.white),
+                                )),
+                    ),
             ],
           );
         }),

@@ -108,19 +108,19 @@ class _LogInScreenState extends State<LogInScreen> {
                                 style: const TextStyle(color: Colors.white),
                               )),
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     TextButton(
-                  //       onPressed: (){
-                  //         Get.to(ForgotPasswordScreen());
-                  //       },
-                  //       child: Text(AppString.forgotPassword,
-                  //       style: TextStyle(
-                  //           color: AppColors.primaryColor, fontSize: 11.sp),
-                  //     ),),
-                  //   ],
-                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: (){
+                          Get.to(ForgotPasswordScreen(isEdit: true,));
+                        },
+                        child: Text(AppString.forgotPassword,
+                        style: TextStyle(
+                            color: AppColors.primaryColor, fontSize: 11.sp),
+                      ),),
+                    ],
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

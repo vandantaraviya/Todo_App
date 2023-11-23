@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                authController.bodSignInController.text = homeController.loginUser!.birthofdate.toString();
                authController.phoneNumberController.text = homeController.loginUser!.phone.toString();
                authController.emailSignInController.text = homeController.loginUser!.email.toString();
-               authController.passwordSignInController.text = homeController.loginUser!.password.toString();
+               // authController.passwordSignInController.text = homeController.loginUser!.password.toString();
                Get.to(const SignUpScreen(isEdit: true,));
             },
             icon: Icon(Icons.person_outline_rounded,size: 15.sp,),
@@ -67,24 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
           // ),
         ],
       ),
-      body:
-      // Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: const [
-      //       // ElevatedButton(
-      //       //     onPressed: (){
-      //       //       notificationService.showNotification(
-      //       //         title: "vandan", body: "hello world",
-      //       //       );
-      //       //     },
-      //       //     child: const Text("notification"),
-      //       // ),
-      //     ],
-      //   ),
-      // ),
-      Obx(() {
-        return homeController.tasklist.isEmpty
+      body: Obx(() {
+            return homeController.tasklist.isEmpty
             ? Center(
                 child: Text(
                   AppString.taskisempty,
