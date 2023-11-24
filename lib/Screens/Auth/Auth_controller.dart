@@ -6,10 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/Screens/Auth/LogInScreen/login_screen.dart';
-import 'package:todo_app/Screens/Auth/Signup_Email_Verified/email_verified.dart';
 import '../../Services/Pref_Res.dart';
 import '../../utils/Common/app_string.dart';
 import '../HomeScreen/home_controller.dart';
@@ -215,7 +215,6 @@ class AuthController extends GetxController {
   }
 
   alertDialog(BuildContext context,{String? email,}) {
-    User? user = FirebaseAuth.instance.currentUser;
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -233,8 +232,7 @@ class AuthController extends GetxController {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
                 ),
-                child: Text('OK',
-                  style: const TextStyle(color: Colors.white),
+                child: Text('OK',style: const TextStyle(color: Colors.white),
                 )),
               ),
             ],
@@ -396,6 +394,33 @@ class AuthController extends GetxController {
     update(['image']);
   }
 
+ signup(BuildContext context) async {
+    try{
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+        final AuthCredential authCredential = GoogleAuthProvider.credential(
+            idToken: googleSignInAuthentication.idToken,
+            accessToken: googleSignInAuthentication.accessToken);
+
+        UserCredential result = await auth.signInWithCredential(authCredential);
+        User? user = result.user;
+        print(user!.email);
+        if (result != null) {
+          Get.offAll(HomeScreen());
+        }
+        print(googleSignInAccount.email);
+      }
+    }catch(e){
+      print(e.toString());
+      rethrow;
+    }
+  }
+
 
   @override
   void dispose() {
@@ -405,4 +430,5 @@ class AuthController extends GetxController {
     emailSignInController.clear();
     passwordSignInController.clear();
   }
+
 }

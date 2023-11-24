@@ -39,7 +39,8 @@ dependencies:
   get_storage:
   flutter_slidable:
   flutter_datetime_picker: ^1.5.1
-  intl: 
+  intl:
+  google_sign_in:
   firebase_core:
   firebase_database:
   firebase_auth:
@@ -52,6 +53,7 @@ dependencies:
   lottie:
   cached_network_image:
   flutter_launcher_icons: ^0.13.1
+
 
 dev_dependencies:
   flutter_test:

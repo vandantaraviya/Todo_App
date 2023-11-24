@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -19,6 +20,7 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   final AuthController authController = Get.put(AuthController());
+  RxBool isAuth = false.obs;
 
   @override
   void dispose() {
@@ -142,6 +144,31 @@ class _LogInScreenState extends State<LogInScreen> {
                               color: AppColors.primaryColor,
                               fontSize: 11.sp,
                               fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 1.h,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: ()async {
+                          authController.signup(context);
+                        },
+                        child: CircleAvatar(
+                          radius: 25.0,
+                          backgroundColor: AppColors.primaryColor,
+                          backgroundImage: AssetImage(Assets.imageGoogle),
+                        ),
+                      ),
+                      SizedBox(width: 5.w,),
+                      InkWell(
+                        onTap: (){},
+                        child: CircleAvatar(
+                          radius: 25.0,
+                          backgroundColor: AppColors.whiteColor,
+                          backgroundImage: AssetImage(Assets.imageFacebook),
                         ),
                       ),
                     ],
