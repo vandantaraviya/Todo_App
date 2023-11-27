@@ -394,7 +394,7 @@ class AuthController extends GetxController {
     update(['image']);
   }
 
- signup(BuildContext context) async {
+ googleSignup(BuildContext context) async {
     try{
       final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -415,6 +415,9 @@ class AuthController extends GetxController {
         }
         print(googleSignInAccount.email);
       }
+    }on FirebaseException catch(e){
+      print(e.code);
+      errorSnackbar(title: 'error',message: e.code);
     }catch(e){
       print(e.toString());
       rethrow;

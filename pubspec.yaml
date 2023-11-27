@@ -41,7 +41,8 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   intl:
   google_sign_in:
-  firebase_core:
+  flutter_facebook_auth:
+  firebase_core: ^2.23.0
   firebase_database:
   firebase_auth:
   firebase_storage:

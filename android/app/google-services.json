@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "1026832106821",
-    "project_id": "todo-22a0d",
-    "storage_bucket": "todo-22a0d.appspot.com"
+    "project_number": "678619922210",
+    "project_id": "todo-34684",
+    "storage_bucket": "todo-34684.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1026832106821:android:05ada04f3937c948df6a2c",
+        "mobilesdk_app_id": "1:678619922210:android:bcc19f6650c7c2c2d32f7b",
         "android_client_info": {
           "package_name": "com.example.todo_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1026832106821-ud2vmue7tf4eke50v5otmu8h82h2rbu9.apps.googleusercontent.com",
+          "client_id": "678619922210-tdu1gdpb3533oir973jflle8ogikpcki.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.todo_app",
@@ -22,27 +22,27 @@
           }
         },
         {
-          "client_id": "1026832106821-65oskvpabvgue9tjbevgs1nbn8al0c6n.apps.googleusercontent.com",
+          "client_id": "678619922210-8eajkopui529rvo763g79gqtddrbbc28.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAU75WOhZ_hUSOkhWh05XStDjowPpDmGGE"
+          "current_key": "AIzaSyDxVOAV3DMYGgL6VSWsUDZ4fEkNRLYEmTo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1026832106821-65oskvpabvgue9tjbevgs1nbn8al0c6n.apps.googleusercontent.com",
+              "client_id": "678619922210-8eajkopui529rvo763g79gqtddrbbc28.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1026832106821-oq1gqhkbfhvti1aajka5abffpvmap426.apps.googleusercontent.com",
+              "client_id": "678619922210-me8s346r09u8q89193r0sb8h1cjn1irf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.todo_app"
+                "bundle_id": "com.example.firebaseDemo1"
               }
             }
           ]

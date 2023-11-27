@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/ForgotPassword/forgot_password_screen.dart';
+import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
 import '../../../Services/Pref_Res.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/Common/app_string.dart';
@@ -20,7 +23,50 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   final AuthController authController = Get.put(AuthController());
-  RxBool isAuth = false.obs;
+  Map<String, dynamic>? userData;
+  AccessToken? accessToken;
+  bool checking = true;
+
+
+
+  // checkIfisLoggedIn() async {
+  //    accessToken = await FacebookAuth.instance.accessToken;
+  //   setState(() {
+  //     checking = false;
+  //   });
+  //   if (accessToken != null) {
+  //     print(accessToken!.toJson());
+  //      userData = await FacebookAuth.instance.getUserData();
+  //     accessToken = accessToken;
+  //     setState(() {
+  //       userData = userData;
+  //     });
+  //   } else {
+  //     _login();
+  //   }
+  // }
+
+  _login() async {
+    try{
+      final LoginResult result = await FacebookAuth.instance.login();
+
+      if (result.status == LoginStatus.success) {
+        accessToken = result.accessToken;
+        userData = await FacebookAuth.instance.getUserData();
+        userData = userData;
+      } else {
+        print('result:------------------------------${result.status}');
+        print('result:------------------------------${result.message}');
+      }
+      setState(() {
+        checking = false;
+      });
+    }catch(e){
+      print("Error:------------------------${e.toString()}");
+      rethrow;
+    }
+  }
+
 
   @override
   void dispose() {
@@ -149,12 +195,33 @@ class _LogInScreenState extends State<LogInScreen> {
                     ],
                   ),
                   SizedBox(height: 1.h,),
+                  // GestureDetector(
+                  //   onTap: ()async {
+                  //     authController.googleSignup(context);
+                  //   },
+                  //   child: Container(
+                  //     height: 5.h,
+                  //     width: 60.w,
+                  //     decoration: BoxDecoration(
+                  //       color: AppColors.primaryColor,
+                  //       borderRadius: BorderRadius.circular(12),
+                  //     ),
+                  //     child: Center(
+                  //       child: Row(
+                  //         children: [
+                  //           Image(image: AssetImage(Assets.imageGoogle)),
+                  //           Text("Sign in With Google",style: TextStyle(fontSize: 10.sp,color: AppColors.whiteColor),),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
                         onTap: ()async {
-                          authController.signup(context);
+                          authController.googleSignup(context);
                         },
                         child: CircleAvatar(
                           radius: 25.0,
@@ -164,7 +231,9 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                       SizedBox(width: 5.w,),
                       InkWell(
-                        onTap: (){},
+                        onTap: (){
+                          _login();
+                        },
                         child: CircleAvatar(
                           radius: 25.0,
                           backgroundColor: AppColors.whiteColor,

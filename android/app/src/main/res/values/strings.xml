@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">todo app</string>
+    <string name="facebook_app_id">720900749941099</string>
+    <string name="fb_login_protocol_scheme">fb720900749941099</string>
+    <string name="facebook_client_token">b15c10548a306962f037e9bd8cf48b5f</string>
+</resources>

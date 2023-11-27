@@ -51,7 +51,7 @@ android {
         applicationId "com.example.todo_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 33
         multiDexEnabled = true
         versionCode flutterVersionCode.toInteger()
@@ -73,4 +73,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.facebook.android:facebook-login:latest.release'
 }
