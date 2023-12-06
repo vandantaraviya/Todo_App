@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/Screens/Auth/LogInScreen/login_screen.dart';
 import '../../Services/Pref_Res.dart';
+import '../../Services/ads_manger.dart';
 import '../../utils/Common/app_string.dart';
 import '../HomeScreen/home_controller.dart';
 import '../HomeScreen/home_screen.dart';
@@ -51,6 +52,22 @@ class AuthController extends GetxController {
   String userIdEdit = PrefService.getString(PrefRes.userId);
   Timer? timer;
 
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await AdManager.loadUnityIntAd();
+      await AdManager.loadUnityRewardedAd();
+    });
+  }
+
+  Future<void> startToPlay() async {
+    await AdManager.showRewardedAd();
+    logIn(email: emailController.text,password: passwordController.text,);
+    update();
+  }
 
   emailVerfiy() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -260,7 +277,7 @@ class AuthController extends GetxController {
           backgroundColor: AppColors.primaryColor,
           colorText: AppColors.whiteColor,
         );
-        Get.offAll(() => const HomeScreen());
+       Get.offAll(HomeScreen());
       }else{
         errorSnackbar(title: 'error', message: 'Email Not Verifying.....',);
       }

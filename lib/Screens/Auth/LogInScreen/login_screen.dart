@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/ForgotPassword/forgot_password_screen.dart';
 import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
 import '../../../Services/Pref_Res.dart';
+import '../../../Services/ads_manger.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/Common/app_string.dart';
 import '../../../utils/Common_Widgets/custom_textfiled.dart';
@@ -27,8 +28,6 @@ class _LogInScreenState extends State<LogInScreen> {
   AccessToken? accessToken;
   bool checking = true;
 
-
-
   // checkIfisLoggedIn() async {
   //    accessToken = await FacebookAuth.instance.accessToken;
   //   setState(() {
@@ -45,6 +44,8 @@ class _LogInScreenState extends State<LogInScreen> {
   //     _login();
   //   }
   // }
+
+
 
   _login() async {
     try{
@@ -66,6 +67,7 @@ class _LogInScreenState extends State<LogInScreen> {
       rethrow;
     }
   }
+
 
 
   @override
@@ -139,10 +141,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     width: 350,
                     child: ElevatedButton(
                         onPressed: () {
-                          authController.logIn(
-                            email: authController.emailController.text,
-                            password: authController.passwordController.text,
-                          );
+                          authController.startToPlay();
                           PrefService.setValue(PrefRes.loginUser, true);
                         },
                         style: ElevatedButton.styleFrom(
@@ -195,53 +194,32 @@ class _LogInScreenState extends State<LogInScreen> {
                     ],
                   ),
                   SizedBox(height: 1.h,),
-                  // GestureDetector(
-                  //   onTap: ()async {
-                  //     authController.googleSignup(context);
-                  //   },
-                  //   child: Container(
-                  //     height: 5.h,
-                  //     width: 60.w,
-                  //     decoration: BoxDecoration(
-                  //       color: AppColors.primaryColor,
-                  //       borderRadius: BorderRadius.circular(12),
-                  //     ),
-                  //     child: Center(
-                  //       child: Row(
-                  //         children: [
-                  //           Image(image: AssetImage(Assets.imageGoogle)),
-                  //           Text("Sign in With Google",style: TextStyle(fontSize: 10.sp,color: AppColors.whiteColor),),
-                  //         ],
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     InkWell(
+                  //       onTap: ()async {
+                  //         authController.googleSignup(context);
+                  //       },
+                  //       child: CircleAvatar(
+                  //         radius: 25.0,
+                  //         backgroundColor: AppColors.primaryColor,
+                  //         backgroundImage: AssetImage(Assets.imageGoogle),
                   //       ),
                   //     ),
-                  //   ),
+                  //     SizedBox(width: 5.w,),
+                  //     InkWell(
+                  //       onTap: (){
+                  //         _login();
+                  //       },
+                  //       child: CircleAvatar(
+                  //         radius: 25.0,
+                  //         backgroundColor: AppColors.whiteColor,
+                  //         backgroundImage: AssetImage(Assets.imageFacebook),
+                  //       ),
+                  //     ),
+                  //   ],
                   // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: ()async {
-                          authController.googleSignup(context);
-                        },
-                        child: CircleAvatar(
-                          radius: 25.0,
-                          backgroundColor: AppColors.primaryColor,
-                          backgroundImage: AssetImage(Assets.imageGoogle),
-                        ),
-                      ),
-                      SizedBox(width: 5.w,),
-                      InkWell(
-                        onTap: (){
-                          _login();
-                        },
-                        child: CircleAvatar(
-                          radius: 25.0,
-                          backgroundColor: AppColors.whiteColor,
-                          backgroundImage: AssetImage(Assets.imageFacebook),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
