@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/ForgotPassword/forgot_password_screen.dart';
 import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
+import 'package:todo_app/Services/google_ads.dart';
 import '../../../Services/Pref_Res.dart';
 import '../../../Services/ads_manger.dart';
 import '../../../generated/assets.dart';
@@ -68,7 +69,13 @@ class _LogInScreenState extends State<LogInScreen> {
     }
   }
 
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    authController.interAds();
+    authController.bannerAds();
+  }
 
   @override
   void dispose() {
@@ -89,6 +96,17 @@ class _LogInScreenState extends State<LogInScreen> {
           automaticallyImplyLeading: false,
           title: const Text("LogIn Screen"),
           centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: (){
+                  if (authController.interstitialAd != null) {
+                    authController.interstitialAd!.show();
+                    authController.interAds();
+                  }else{
+                    authController.interAds();
+                  }
+                }, icon: Icon(Icons.add),),
+          ],
         ),
         body: Obx(() {
           return SingleChildScrollView(
@@ -141,7 +159,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     width: 350,
                     child: ElevatedButton(
                         onPressed: () {
-                          authController.startToPlay();
+                          authController.logIn(email: authController.emailController.text,password: authController.passwordController.text);
                           PrefService.setValue(PrefRes.loginUser, true);
                         },
                         style: ElevatedButton.styleFrom(

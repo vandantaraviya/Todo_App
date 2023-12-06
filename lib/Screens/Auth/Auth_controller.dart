@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -51,6 +52,8 @@ class AuthController extends GetxController {
   String imageUrl= '';
   String userIdEdit = PrefService.getString(PrefRes.userId);
   Timer? timer;
+  BannerAd? bannerAd;
+  InterstitialAd? interstitialAd;
 
 
   @override
@@ -63,11 +66,32 @@ class AuthController extends GetxController {
     });
   }
 
-  Future<void> startToPlay() async {
-    await AdManager.showRewardedAd();
-    logIn(email: emailController.text,password: passwordController.text,);
-    update();
+  void bannerAds() {
+    bannerAd = BannerAd(
+        size: AdSize.banner,
+        adUnitId: "ca-app-pub-3403605839455121/6709723471",
+        listener: const BannerAdListener(),
+        request: const AdRequest());
+    bannerAd!.load();
   }
+
+  void interAds() {
+    try{
+      InterstitialAd.load(
+          adUnitId: "ca-app-pub-3403605839455121/6709723471",
+          request: const AdRequest(),
+          adLoadCallback: InterstitialAdLoadCallback(
+              onAdLoaded: (ad) {
+                interstitialAd = ad;
+                update();
+              },
+              onAdFailedToLoad: (error) {}));
+    }catch(e){
+      print(e);
+      rethrow;
+    }
+  }
+
 
   emailVerfiy() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -277,6 +301,7 @@ class AuthController extends GetxController {
           backgroundColor: AppColors.primaryColor,
           colorText: AppColors.whiteColor,
         );
+        await AdManager.showRewardedAd();
        Get.offAll(HomeScreen());
       }else{
         errorSnackbar(title: 'error', message: 'Email Not Verifying.....',);
