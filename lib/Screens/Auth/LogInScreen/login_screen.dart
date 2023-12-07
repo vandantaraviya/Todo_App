@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/ForgotPassword/forgot_password_screen.dart';
@@ -25,6 +26,7 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   final AuthController authController = Get.put(AuthController());
+  final GoogleAdsManager googleAdsManager = Get.put(GoogleAdsManager());
   Map<String, dynamic>? userData;
   AccessToken? accessToken;
   bool checking = true;
@@ -46,10 +48,8 @@ class _LogInScreenState extends State<LogInScreen> {
   //   }
   // }
 
-
-
   _login() async {
-    try{
+    try {
       final LoginResult result = await FacebookAuth.instance.login();
 
       if (result.status == LoginStatus.success) {
@@ -63,7 +63,7 @@ class _LogInScreenState extends State<LogInScreen> {
       setState(() {
         checking = false;
       });
-    }catch(e){
+    } catch (e) {
       print("Error:------------------------${e.toString()}");
       rethrow;
     }
@@ -73,8 +73,8 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    authController.interAds();
-    authController.bannerAds();
+    googleAdsManager.interAds();
+    googleAdsManager.loadAd();
   }
 
   @override
@@ -96,17 +96,22 @@ class _LogInScreenState extends State<LogInScreen> {
           automaticallyImplyLeading: false,
           title: const Text("LogIn Screen"),
           centerTitle: true,
-          actions: [
-            IconButton(
-                onPressed: (){
-                  if (authController.interstitialAd != null) {
-                    authController.interstitialAd!.show();
-                    authController.interAds();
-                  }else{
-                    authController.interAds();
-                  }
-                }, icon: Icon(Icons.add),),
-          ],
+          // actions: [
+          //   IconButton(
+          //       onPressed: (){
+          //         if (authController.interstitialAd != null) {
+          //           authController.interstitialAd!.show();
+          //           authController.interAds();
+          //         }
+          //       }, icon: Icon(Icons.add),),
+          //   IconButton(
+          //     onPressed: (){
+          //       if (authController.rewardedAd != null) {
+          //         authController.rewardedAd!.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {});
+          //         authController.loadAd();
+          //       }
+          //     }, icon: Icon(Icons.ad_units),),
+          // ],
         ),
         body: Obx(() {
           return SingleChildScrollView(
@@ -119,8 +124,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     child: Lottie.asset(Assets.lottieLogInScreen),
                   ),
                   CustomTextField(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                     textEditingController: authController.emailController,
                     hintText: AppString.pleaseEmali,
                     labelText: AppString.email,
@@ -148,6 +152,10 @@ class _LogInScreenState extends State<LogInScreen> {
                       onPressed: () {
                         authController.passwordVisible.value =
                             !authController.passwordVisible.value;
+                        if (googleAdsManager.interstitialAd != null) {
+                          googleAdsManager.interstitialAd!.show();
+                          googleAdsManager.interAds();
+                        }
                       },
                     ),
                   ),
@@ -159,7 +167,9 @@ class _LogInScreenState extends State<LogInScreen> {
                     width: 350,
                     child: ElevatedButton(
                         onPressed: () {
-                          authController.logIn(email: authController.emailController.text,password: authController.passwordController.text);
+                          authController.logIn(
+                              email: authController.emailController.text,
+                              password: authController.passwordController.text);
                           PrefService.setValue(PrefRes.loginUser, true);
                         },
                         style: ElevatedButton.styleFrom(
@@ -178,13 +188,17 @@ class _LogInScreenState extends State<LogInScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
-                        onPressed: (){
-                          Get.to(ForgotPasswordScreen(isEdit: true,));
+                        onPressed: () {
+                          Get.to(ForgotPasswordScreen(
+                            isEdit: true,
+                          ));
                         },
-                        child: Text(AppString.forgotPassword,
-                        style: TextStyle(
-                            color: AppColors.primaryColor, fontSize: 11.sp),
-                      ),),
+                        child: Text(
+                          AppString.forgotPassword,
+                          style: TextStyle(
+                              color: AppColors.primaryColor, fontSize: 11.sp),
+                        ),
+                      ),
                     ],
                   ),
                   Row(
@@ -193,7 +207,9 @@ class _LogInScreenState extends State<LogInScreen> {
                       Text(
                         AppString.creatAccount,
                         style: TextStyle(
-                            color: AppColors.primaryColor, fontSize: 11.sp,fontWeight: FontWeight.bold),
+                            color: AppColors.primaryColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.bold),
                       ),
                       TextButton(
                         onPressed: () {
@@ -211,7 +227,9 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 1.h,),
+                  SizedBox(
+                    height: 1.h,
+                  ),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: [

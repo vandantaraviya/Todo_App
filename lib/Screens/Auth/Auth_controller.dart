@@ -52,9 +52,6 @@ class AuthController extends GetxController {
   String imageUrl= '';
   String userIdEdit = PrefService.getString(PrefRes.userId);
   Timer? timer;
-  BannerAd? bannerAd;
-  InterstitialAd? interstitialAd;
-
 
   @override
   void onInit() {
@@ -66,33 +63,7 @@ class AuthController extends GetxController {
     });
   }
 
-  void bannerAds() {
-    bannerAd = BannerAd(
-        size: AdSize.banner,
-        adUnitId: "ca-app-pub-3403605839455121/2811475528",
-        listener: const BannerAdListener(),
-        request: const AdRequest());
-    bannerAd!.load();
-  }
-
-  void interAds() {
-    try{
-      InterstitialAd.load(
-          adUnitId: "ca-app-pub-3403605839455121/1881537237",
-          request: const AdRequest(),
-          adLoadCallback: InterstitialAdLoadCallback(
-              onAdLoaded: (ad) {
-                interstitialAd = ad;
-                update();
-              },
-              onAdFailedToLoad: (error) {}));
-    }catch(e){
-      print(e);
-      rethrow;
-    }
-  }
-
-
+  
   emailVerfiy() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user!.emailVerified) {
@@ -233,6 +204,7 @@ class AuthController extends GetxController {
           bodSignInController.clear();
           addressSignInController.clear();
         }
+        await AdManager.showRewardedAd();
         Get.snackbar("Successfully","Successfully Registration ",
         backgroundColor: AppColors.primaryColor,colorText: AppColors.whiteColor,
         );
@@ -302,7 +274,7 @@ class AuthController extends GetxController {
           colorText: AppColors.whiteColor,
         );
         await AdManager.showRewardedAd();
-       Get.offAll(HomeScreen());
+        Get.offAll(HomeScreen());
       }else{
         errorSnackbar(title: 'error', message: 'Email Not Verifying.....',);
       }
