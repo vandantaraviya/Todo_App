@@ -55,6 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor:  Colors.indigo,
           leading:widget.isEdit! ?
           IconButton(
             onPressed: (){
@@ -71,9 +72,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Get.back();
                 }
               },
-              icon: Icon(Icons.arrow_back_outlined,size: 15.sp,),
+              icon: Icon(Icons.arrow_back_outlined,size: 15.sp,color: Colors.white),
           ),
-          title: Text(widget.isEdit! ? AppString.editProfile : AppString.signUpScreen),
+          title: Text(widget.isEdit! ? AppString.editProfile : AppString.signUpScreen,style: TextStyle(color: Colors.white)),
           centerTitle: true,
         ),
         body: Obx(() {

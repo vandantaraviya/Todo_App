@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo_app/Services/ads_manger.dart';
 import '../../Model/Usermodel.dart';
 import '../../Model/taskadd_model.dart';
 import '../../Services/Pref_Res.dart';
@@ -17,6 +18,17 @@ class HomeController extends GetxController {
   var tasklist = <TaskAddModel>[].obs;
   String userId = PrefService.getString(PrefRes.userId);
   UserModel? loginUser;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await AdManager.loadUnityIntAd();
+      await AdManager.loadUnityRewardedAd();
+    });
+  }
+
 
   userdata() async {
     try{

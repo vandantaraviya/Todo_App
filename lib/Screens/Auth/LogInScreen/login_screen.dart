@@ -93,8 +93,9 @@ class _LogInScreenState extends State<LogInScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor:  Colors.indigo,
           automaticallyImplyLeading: false,
-          title: const Text("LogIn Screen"),
+          title: const Text("LogIn Screen",style: TextStyle(color: Colors.white),),
           centerTitle: true,
         ),
         body: Obx(() {

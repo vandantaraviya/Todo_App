@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Services/google_ads.dart';
+import '../../Services/ads_manger.dart';
 import '../../utils/Common/app_string.dart';
 import '../AddTaskScreen/addtask_controller.dart';
 import '../AddTaskScreen/addtask_screen.dart';
@@ -46,7 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppString.homescreen),
+        backgroundColor: Colors.indigo,
+        title: Text(AppString.homescreen,style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             onPressed: (){
@@ -58,12 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
                // authController.passwordSignInController.text = homeController.loginUser!.password.toString();
                Get.to(const SignUpScreen(isEdit: true,));
             },
-            icon: Icon(Icons.person_outline_rounded,size: 15.sp,),
+            icon: Icon(Icons.person_outline_rounded,size: 15.sp,color: Colors.white),
             tooltip: 'Edit Profile',
           ),
           IconButton(
               onPressed: ()=> homeController.logout(),
-              icon: Icon(Icons.logout,size: 15.sp,),
+              icon: Icon(Icons.logout,size: 15.sp,color: Colors.white),
             tooltip: 'Log Out',
           ),
         ],
@@ -158,11 +160,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         trailing: CircleAvatar(
                           child: IconButton(
-                            onPressed: () {
-                              if (googleAdsManager.rewardedAd != null) {
-                                googleAdsManager.rewardedAd!.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) { });
-                                googleAdsManager.RewardedAds();
-                              }
+                            onPressed: () async {
+                              await AdManager.showIntAd();
                               addTaskcontroller.taskAddController.text = homeController.tasklist[index].task.toString();
                               addTaskcontroller.descriptionAddController.text = homeController.tasklist[index].description.toString();
                               addTaskcontroller.dateInputController.text = homeController.tasklist[index].date.toString();

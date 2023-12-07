@@ -142,6 +142,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           .docId!,)
                           : addTaskcontroller.addTask();
                       },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryColor,
+                    ),
                       child: widget.isEdit
                           ? (addTaskcontroller.isEditLoading.value)
                           ? const CircularProgressIndicator(
