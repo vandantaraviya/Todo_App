@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
+import 'package:todo_app/Services/google_ads.dart';
 import '../../../Services/Pref_Res.dart';
 import '../../../utils/Common/app_string.dart';
 import '../../../utils/Common_Widgets/custom_textfiled.dart';
@@ -23,6 +24,15 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final AuthController authController = Get.put(AuthController());
   final HomeController homeController = Get.put(HomeController());
+  final GoogleAdsManager googleAdsManager = Get.put(GoogleAdsManager());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    googleAdsManager.RewardedAds();
+    googleAdsManager.InterstitialAds();
+  }
 
   @override
   void dispose() {

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -5,7 +8,7 @@ class GoogleAdsManager extends GetxController{
   InterstitialAd? interstitialAd;
   RewardedAd? rewardedAd;
 
-  void loadAd() {
+  void RewardedAds() {
     RewardedAd.load(
         adUnitId: 'ca-app-pub-3940256099942544/5224354917',
         request: const AdRequest(),
@@ -18,22 +21,23 @@ class GoogleAdsManager extends GetxController{
         ));
   }
 
-  void interAds() {
-    try{
-      InterstitialAd.load(
-          adUnitId: 'ca-app-pub-3940256099942544/1033173712',
-          request: const AdRequest(),
-          adLoadCallback: InterstitialAdLoadCallback(
-              onAdLoaded: (ad) {
-                interstitialAd = ad;
-                update();
-              },
-              onAdFailedToLoad: (error) {}));
-    }catch(e){
-      print(e);
-      rethrow;
-    }
+
+  void InterstitialAds() {
+    InterstitialAd.load(
+        adUnitId: "ca-app-pub-3940256099942544/1033173712",
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
   }
 
 }
+
+
 

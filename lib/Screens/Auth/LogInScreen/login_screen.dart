@@ -73,8 +73,8 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    googleAdsManager.interAds();
-    googleAdsManager.loadAd();
+    googleAdsManager.RewardedAds();
+    googleAdsManager.InterstitialAds();
   }
 
   @override
@@ -96,22 +96,6 @@ class _LogInScreenState extends State<LogInScreen> {
           automaticallyImplyLeading: false,
           title: const Text("LogIn Screen"),
           centerTitle: true,
-          // actions: [
-          //   IconButton(
-          //       onPressed: (){
-          //         if (authController.interstitialAd != null) {
-          //           authController.interstitialAd!.show();
-          //           authController.interAds();
-          //         }
-          //       }, icon: Icon(Icons.add),),
-          //   IconButton(
-          //     onPressed: (){
-          //       if (authController.rewardedAd != null) {
-          //         authController.rewardedAd!.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {});
-          //         authController.loadAd();
-          //       }
-          //     }, icon: Icon(Icons.ad_units),),
-          // ],
         ),
         body: Obx(() {
           return SingleChildScrollView(
@@ -154,7 +138,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             !authController.passwordVisible.value;
                         if (googleAdsManager.interstitialAd != null) {
                           googleAdsManager.interstitialAd!.show();
-                          googleAdsManager.interAds();
+                          googleAdsManager.InterstitialAds();
                         }
                       },
                     ),
