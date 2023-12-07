@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
 import 'package:todo_app/Services/google_ads.dart';
 import '../../../Services/Pref_Res.dart';
 import '../../../utils/Common/app_string.dart';

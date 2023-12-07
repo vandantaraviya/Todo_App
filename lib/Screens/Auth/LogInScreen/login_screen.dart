@@ -1,16 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/ForgotPassword/forgot_password_screen.dart';
-import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
 import 'package:todo_app/Services/google_ads.dart';
 import '../../../Services/Pref_Res.dart';
-import '../../../Services/ads_manger.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/Common/app_string.dart';
 import '../../../utils/Common_Widgets/custom_textfiled.dart';

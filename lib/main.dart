@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/Auth/SplashScreen/splash_screen.dart';
-import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
-import 'package:todo_app/utils/Common/app_string.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'Services/Pref_Res.dart';
 import 'firebase_options.dart';
