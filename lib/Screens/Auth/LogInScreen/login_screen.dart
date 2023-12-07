@@ -26,22 +26,6 @@ class _LogInScreenState extends State<LogInScreen> {
   AccessToken? accessToken;
   bool checking = true;
 
-  // checkIfisLoggedIn() async {
-  //    accessToken = await FacebookAuth.instance.accessToken;
-  //   setState(() {
-  //     checking = false;
-  //   });
-  //   if (accessToken != null) {
-  //     print(accessToken!.toJson());
-  //      userData = await FacebookAuth.instance.getUserData();
-  //     accessToken = accessToken;
-  //     setState(() {
-  //       userData = userData;
-  //     });
-  //   } else {
-  //     _login();
-  //   }
-  // }
 
   _login() async {
     try {

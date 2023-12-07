@@ -51,12 +51,16 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: (){
-               authController.userNameController.text = homeController.loginUser!.username.toString();
-               authController.addressSignInController.text = homeController.loginUser!.address.toString();
-               authController.bodSignInController.text = homeController.loginUser!.birthofdate.toString();
-               authController.phoneNumberController.text = homeController.loginUser!.phone.toString();
-               authController.emailSignInController.text = homeController.loginUser!.email.toString();
-               Get.to(const SignUpScreen(isEdit: true,));
+              if (googleAdsManager.interstitialAd != null) {
+                googleAdsManager.interstitialAd!.show();
+                googleAdsManager.InterstitialAds();
+                authController.userNameController.text = homeController.loginUser!.username.toString();
+                authController.addressSignInController.text = homeController.loginUser!.address.toString();
+                authController.bodSignInController.text = homeController.loginUser!.birthofdate.toString();
+                authController.phoneNumberController.text = homeController.loginUser!.phone.toString();
+                authController.emailSignInController.text = homeController.loginUser!.email.toString();
+                Get.to(const SignUpScreen(isEdit: true,));
+              }
             },
             icon: Icon(Icons.person_outline_rounded,size: 15.sp,color: Colors.white),
             tooltip: 'Edit Profile',
@@ -159,7 +163,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         trailing: CircleAvatar(
                           child: IconButton(
                             onPressed: () async {
-                              // await AdManager.showIntAd();
+                              if (googleAdsManager.interstitialAd != null) {
+                                googleAdsManager.interstitialAd!.show();
+                                googleAdsManager.InterstitialAds();
+                              }
                               addTaskcontroller.taskAddController.text = homeController.tasklist[index].task.toString();
                               addTaskcontroller.descriptionAddController.text = homeController.tasklist[index].description.toString();
                               addTaskcontroller.dateInputController.text = homeController.tasklist[index].date.toString();

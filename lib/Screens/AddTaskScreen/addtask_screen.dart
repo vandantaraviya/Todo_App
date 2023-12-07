@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo_app/Services/google_ads.dart';
 import '../../utils/Common/app_string.dart';
 import '../../utils/Common_Widgets/custom_textfiled.dart';
 import '../Auth/Auth_controller.dart';
@@ -21,16 +22,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final AddTaskcontroller addTaskcontroller = Get.put(AddTaskcontroller());
   final HomeController homeController = Get.put(HomeController());
   final AuthController authController = Get.put(AuthController());
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // addTaskcontroller.taskAddController.text = '';
-    // addTaskcontroller.descriptionAddController.text = '';
-    // addTaskcontroller.dateInputController.text = '';
-    // addTaskcontroller.timeInputController.text = '';
-  }
+  final GoogleAdsManager googleAdsManager = Get.put(GoogleAdsManager());
 
   @override
   void dispose() {
@@ -53,6 +45,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           title: Text(widget.isEdit ? AppString.edit : AppString.addtask),
           leading: IconButton(
             onPressed: () {
+              if (googleAdsManager.interstitialAd != null) {
+                googleAdsManager.interstitialAd!.show();
+                googleAdsManager.InterstitialAds();
+              }
               homeController.getdata();
               Get.back();
             },
@@ -135,7 +131,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   width: 150.w,
                   child: ElevatedButton(
                     onPressed: () {
-                      print(authController.userId.toString());
                       widget.isEdit
                           ? addTaskcontroller.editTaskData(docId: widget
                           .docId!,)

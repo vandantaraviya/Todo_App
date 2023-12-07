@@ -58,14 +58,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
             onPressed: (){
               if(authController.editLoading.value==true){
               }else{
+                if (googleAdsManager.interstitialAd != null) {
+                  googleAdsManager.interstitialAd!.show();
+                  googleAdsManager.InterstitialAds();
+                }
                 Get.back();
               }
             },
-            icon: Icon(Icons.arrow_back_outlined,size: 15.sp,),
+            icon: Icon(Icons.arrow_back_outlined,size: 15.sp,color: Colors.white),
           ): IconButton(
               onPressed: (){
                 if(authController.isLoading.value==true){
                 }else{
+                  if (googleAdsManager.interstitialAd != null) {
+                    googleAdsManager.interstitialAd!.show();
+                    googleAdsManager.InterstitialAds();
+                  }
                   Get.back();
                 }
               },
@@ -171,6 +179,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPressed: () {
                         authController.passwordVisibleSignIN.value =
                             !authController.passwordVisibleSignIN.value;
+                        if (googleAdsManager.interstitialAd != null) {
+                          googleAdsManager.interstitialAd!.show();
+                          googleAdsManager.InterstitialAds();
+                        }
                       },
                     ),
                   ),

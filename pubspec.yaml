@@ -56,6 +56,8 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   google_mobile_ads:
   unity_ads_plugin:
+  flutter_local_notifications:
+  flutter_timezone:
 
 dev_dependencies:
   flutter_test:
