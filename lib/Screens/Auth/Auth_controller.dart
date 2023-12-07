@@ -69,7 +69,7 @@ class AuthController extends GetxController {
   void bannerAds() {
     bannerAd = BannerAd(
         size: AdSize.banner,
-        adUnitId: "ca-app-pub-3403605839455121/6709723471",
+        adUnitId: "ca-app-pub-3403605839455121/2811475528",
         listener: const BannerAdListener(),
         request: const AdRequest());
     bannerAd!.load();
@@ -78,7 +78,7 @@ class AuthController extends GetxController {
   void interAds() {
     try{
       InterstitialAd.load(
-          adUnitId: "ca-app-pub-3403605839455121/6709723471",
+          adUnitId: "ca-app-pub-3403605839455121/1881537237",
           request: const AdRequest(),
           adLoadCallback: InterstitialAdLoadCallback(
               onAdLoaded: (ad) {
