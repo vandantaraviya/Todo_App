@@ -40,7 +40,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     addTaskcontroller.descriptionAddController.clear();
     addTaskcontroller.dateInputController.clear();
     addTaskcontroller.timeInputController.clear();
-    print('-----------------TextFiled Is Clear------------------------');
   }
 
   @override

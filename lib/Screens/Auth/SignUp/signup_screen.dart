@@ -42,7 +42,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     authController.bodSignInController.clear();
     authController.addressSignInController.clear();
     authController.file = null;
-    print("----------Sign up And Edit Screen Dispose------------");
   }
 
   @override

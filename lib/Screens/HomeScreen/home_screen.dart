@@ -56,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
                authController.bodSignInController.text = homeController.loginUser!.birthofdate.toString();
                authController.phoneNumberController.text = homeController.loginUser!.phone.toString();
                authController.emailSignInController.text = homeController.loginUser!.email.toString();
-               // authController.passwordSignInController.text = homeController.loginUser!.password.toString();
                Get.to(const SignUpScreen(isEdit: true,));
             },
             icon: Icon(Icons.person_outline_rounded,size: 15.sp,color: Colors.white),
@@ -160,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         trailing: CircleAvatar(
                           child: IconButton(
                             onPressed: () async {
-                              await AdManager.showIntAd();
+                              // await AdManager.showIntAd();
                               addTaskcontroller.taskAddController.text = homeController.tasklist[index].task.toString();
                               addTaskcontroller.descriptionAddController.text = homeController.tasklist[index].description.toString();
                               addTaskcontroller.dateInputController.text = homeController.tasklist[index].date.toString();
