@@ -12,7 +12,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   });
 
   final bool? isEdit;
-  AuthController authController = Get.put(AuthController());
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {

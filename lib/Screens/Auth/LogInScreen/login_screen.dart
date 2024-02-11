@@ -1,15 +1,18 @@
+<<<<<<< HEAD
+import 'dart:io' show Platform;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+=======
+>>>>>>> dcee5ab944bbad637504612548d6088c380775c2
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/ForgotPassword/forgot_password_screen.dart';
-import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
 import 'package:todo_app/Services/google_ads.dart';
 import '../../../Services/Pref_Res.dart';
-import '../../../Services/ads_manger.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/Common/app_string.dart';
 import '../../../utils/Common_Widgets/custom_textfiled.dart';
@@ -25,31 +28,21 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   final AuthController authController = Get.put(AuthController());
+  final GoogleAdsManager googleAdsManager = Get.put(GoogleAdsManager());
   Map<String, dynamic>? userData;
   AccessToken? accessToken;
   bool checking = true;
+<<<<<<< HEAD
+  AdRequest? adRequest;
+  BannerAd? bannerAd;
+  InterstitialAd? interstitialAd;
+  RewardedAd? rewardedAd;
+=======
 
-  // checkIfisLoggedIn() async {
-  //    accessToken = await FacebookAuth.instance.accessToken;
-  //   setState(() {
-  //     checking = false;
-  //   });
-  //   if (accessToken != null) {
-  //     print(accessToken!.toJson());
-  //      userData = await FacebookAuth.instance.getUserData();
-  //     accessToken = accessToken;
-  //     setState(() {
-  //       userData = userData;
-  //     });
-  //   } else {
-  //     _login();
-  //   }
-  // }
-
-
+>>>>>>> dcee5ab944bbad637504612548d6088c380775c2
 
   _login() async {
-    try{
+    try {
       final LoginResult result = await FacebookAuth.instance.login();
 
       if (result.status == LoginStatus.success) {
@@ -63,19 +56,22 @@ class _LogInScreenState extends State<LogInScreen> {
       setState(() {
         checking = false;
       });
-    }catch(e){
+    } catch (e) {
       print("Error:------------------------${e.toString()}");
       rethrow;
     }
   }
 
+<<<<<<< HEAD
+=======
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    authController.interAds();
-    authController.bannerAds();
+    googleAdsManager.RewardedAds();
+    googleAdsManager.InterstitialAds();
   }
+>>>>>>> dcee5ab944bbad637504612548d6088c380775c2
 
   @override
   void dispose() {
@@ -93,20 +89,42 @@ class _LogInScreenState extends State<LogInScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor:  Colors.indigo,
           automaticallyImplyLeading: false,
-          title: const Text("LogIn Screen"),
+          title: const Text("LogIn Screen",style: TextStyle(color: Colors.white),),
           centerTitle: true,
+<<<<<<< HEAD
           actions: [
             IconButton(
                 onPressed: (){
-                  if (authController.interstitialAd != null) {
-                    authController.interstitialAd!.show();
-                    authController.interAds();
-                  }else{
-                    authController.interAds();
-                  }
+                  InterstitialAd.load(
+                    adUnitId: Platform.isAndroid
+                        ? "ca-app-pub-3403605839455121/6709723471"
+                        : "ca-app-pub-3403605839455121/6709723471",
+                    request: const AdRequest(),
+                    adLoadCallback: InterstitialAdLoadCallback(
+                      onAdLoaded: (ad) {
+                        interstitialAd = ad;
+                        ad.show();
+                        interstitialAd?.fullScreenContentCallback =
+                            FullScreenContentCallback(
+                                onAdDismissedFullScreenContent: (ad) {
+                                  interstitialAd?.dispose();
+                                  ad.dispose();
+                                }, onAdFailedToShowFullScreenContent: (ad, err) {
+                              ad.dispose();
+                              interstitialAd?.dispose();
+                            });
+                      },
+                      onAdFailedToLoad: (err) {
+                        interstitialAd?.dispose();
+                      },
+                    ),
+                  );
                 }, icon: Icon(Icons.add),),
           ],
+=======
+>>>>>>> dcee5ab944bbad637504612548d6088c380775c2
         ),
         body: Obx(() {
           return SingleChildScrollView(
@@ -119,8 +137,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     child: Lottie.asset(Assets.lottieLogInScreen),
                   ),
                   CustomTextField(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                     textEditingController: authController.emailController,
                     hintText: AppString.pleaseEmali,
                     labelText: AppString.email,
@@ -148,6 +165,10 @@ class _LogInScreenState extends State<LogInScreen> {
                       onPressed: () {
                         authController.passwordVisible.value =
                             !authController.passwordVisible.value;
+                        if (googleAdsManager.interstitialAd != null) {
+                          googleAdsManager.interstitialAd!.show();
+                          googleAdsManager.InterstitialAds();
+                        }
                       },
                     ),
                   ),
@@ -159,7 +180,9 @@ class _LogInScreenState extends State<LogInScreen> {
                     width: 350,
                     child: ElevatedButton(
                         onPressed: () {
-                          authController.logIn(email: authController.emailController.text,password: authController.passwordController.text);
+                          authController.logIn(
+                              email: authController.emailController.text,
+                              password: authController.passwordController.text);
                           PrefService.setValue(PrefRes.loginUser, true);
                         },
                         style: ElevatedButton.styleFrom(
@@ -178,13 +201,17 @@ class _LogInScreenState extends State<LogInScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
-                        onPressed: (){
-                          Get.to(ForgotPasswordScreen(isEdit: true,));
+                        onPressed: () {
+                          Get.to(ForgotPasswordScreen(
+                            isEdit: true,
+                          ));
                         },
-                        child: Text(AppString.forgotPassword,
-                        style: TextStyle(
-                            color: AppColors.primaryColor, fontSize: 11.sp),
-                      ),),
+                        child: Text(
+                          AppString.forgotPassword,
+                          style: TextStyle(
+                              color: AppColors.primaryColor, fontSize: 11.sp),
+                        ),
+                      ),
                     ],
                   ),
                   Row(
@@ -193,7 +220,9 @@ class _LogInScreenState extends State<LogInScreen> {
                       Text(
                         AppString.creatAccount,
                         style: TextStyle(
-                            color: AppColors.primaryColor, fontSize: 11.sp,fontWeight: FontWeight.bold),
+                            color: AppColors.primaryColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.bold),
                       ),
                       TextButton(
                         onPressed: () {
@@ -211,7 +240,9 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 1.h,),
+                  SizedBox(
+                    height: 1.h,
+                  ),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: [

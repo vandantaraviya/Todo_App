@@ -1,9 +1,8 @@
-import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:todo_app/Screens/HomeScreen/home_screen.dart';
+import 'package:todo_app/Services/google_ads.dart';
 import '../../../Services/Pref_Res.dart';
 import '../../../utils/Common/app_string.dart';
 import '../../../utils/Common_Widgets/custom_textfiled.dart';
@@ -23,6 +22,15 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final AuthController authController = Get.put(AuthController());
   final HomeController homeController = Get.put(HomeController());
+  final GoogleAdsManager googleAdsManager = Get.put(GoogleAdsManager());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    googleAdsManager.RewardedAds();
+    googleAdsManager.InterstitialAds();
+  }
 
   @override
   void dispose() {
@@ -34,7 +42,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     authController.bodSignInController.clear();
     authController.addressSignInController.clear();
     authController.file = null;
-    print("----------Sign up And Edit Screen Dispose------------");
   }
 
   @override
@@ -45,25 +52,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor:  Colors.indigo,
           leading:widget.isEdit! ?
           IconButton(
             onPressed: (){
               if(authController.editLoading.value==true){
               }else{
+                if (googleAdsManager.interstitialAd != null) {
+                  googleAdsManager.interstitialAd!.show();
+                  googleAdsManager.InterstitialAds();
+                }
                 Get.back();
               }
             },
-            icon: Icon(Icons.arrow_back_outlined,size: 15.sp,),
+            icon: Icon(Icons.arrow_back_outlined,size: 15.sp,color: Colors.white),
           ): IconButton(
               onPressed: (){
                 if(authController.isLoading.value==true){
                 }else{
+                  if (googleAdsManager.interstitialAd != null) {
+                    googleAdsManager.interstitialAd!.show();
+                    googleAdsManager.InterstitialAds();
+                  }
                   Get.back();
                 }
               },
-              icon: Icon(Icons.arrow_back_outlined,size: 15.sp,),
+              icon: Icon(Icons.arrow_back_outlined,size: 15.sp,color: Colors.white),
           ),
-          title: Text(widget.isEdit! ? AppString.editProfile : AppString.signUpScreen),
+          title: Text(widget.isEdit! ? AppString.editProfile : AppString.signUpScreen,style: TextStyle(color: Colors.white)),
           centerTitle: true,
         ),
         body: Obx(() {
@@ -163,6 +179,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPressed: () {
                         authController.passwordVisibleSignIN.value =
                             !authController.passwordVisibleSignIN.value;
+                        if (googleAdsManager.interstitialAd != null) {
+                          googleAdsManager.interstitialAd!.show();
+                          googleAdsManager.InterstitialAds();
+                        }
                       },
                     ),
                   ),

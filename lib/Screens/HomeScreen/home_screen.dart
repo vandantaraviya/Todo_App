@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo_app/Services/google_ads.dart';
+import '../../Services/ads_manger.dart';
 import '../../utils/Common/app_string.dart';
 import '../AddTaskScreen/addtask_controller.dart';
 import '../AddTaskScreen/addtask_screen.dart';
@@ -18,12 +20,15 @@ class _HomeScreenState extends State<HomeScreen> {
   final HomeController homeController = Get.put(HomeController());
   final AddTaskcontroller addTaskcontroller = Get.put(AddTaskcontroller());
   final AuthController authController = Get.put(AuthController());
+  final GoogleAdsManager googleAdsManager = Get.put(GoogleAdsManager());
 
   @override
   void initState() {
     super.initState();
     homeController.getdata();
     homeController.userdata();
+    googleAdsManager.RewardedAds();
+    googleAdsManager.InterstitialAds();
   }
 
   @override
@@ -41,30 +46,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppString.homescreen),
+        backgroundColor: Colors.indigo,
+        title: Text(AppString.homescreen,style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             onPressed: (){
-               authController.userNameController.text = homeController.loginUser!.username.toString();
-               authController.addressSignInController.text = homeController.loginUser!.address.toString();
-               authController.bodSignInController.text = homeController.loginUser!.birthofdate.toString();
-               authController.phoneNumberController.text = homeController.loginUser!.phone.toString();
-               authController.emailSignInController.text = homeController.loginUser!.email.toString();
-               // authController.passwordSignInController.text = homeController.loginUser!.password.toString();
-               Get.to(const SignUpScreen(isEdit: true,));
+              if (googleAdsManager.interstitialAd != null) {
+                googleAdsManager.interstitialAd!.show();
+                googleAdsManager.InterstitialAds();
+                authController.userNameController.text = homeController.loginUser!.username.toString();
+                authController.addressSignInController.text = homeController.loginUser!.address.toString();
+                authController.bodSignInController.text = homeController.loginUser!.birthofdate.toString();
+                authController.phoneNumberController.text = homeController.loginUser!.phone.toString();
+                authController.emailSignInController.text = homeController.loginUser!.email.toString();
+                Get.to(const SignUpScreen(isEdit: true,));
+              }
             },
-            icon: Icon(Icons.person_outline_rounded,size: 15.sp,),
+            icon: Icon(Icons.person_outline_rounded,size: 15.sp,color: Colors.white),
             tooltip: 'Edit Profile',
           ),
           IconButton(
               onPressed: ()=> homeController.logout(),
-              icon: Icon(Icons.logout,size: 15.sp,),
+              icon: Icon(Icons.logout,size: 15.sp,color: Colors.white),
             tooltip: 'Log Out',
           ),
-          // IconButton(
-          //   onPressed: ()=> Get.to(const SearchScreen()),
-          //   icon: Icon(Icons.search,size: 15.sp,),
-          // ),
         ],
       ),
       body: Obx(() {
@@ -134,44 +139,47 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: 1.h,
                             ),
-                            Text(
-                              homeController.tasklist[index].date.toString(),
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: AppColors.primaryColor,
-                                  fontWeight: FontWeight.bold),
+                            Row(
+                              children: [
+                                Text(
+                                  homeController.tasklist[index].date.toString(),
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(width: 2.w,),
+                                Text(
+                                  homeController.tasklist[index].time.toString(),
+                                  style: TextStyle(
+                                      fontSize: 10.sp,
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            CircleAvatar(
-                              child: IconButton(
-                                onPressed: () {
-                                  addTaskcontroller.taskAddController.text = homeController.tasklist[index].task.toString();
-                                  addTaskcontroller.descriptionAddController.text = homeController.tasklist[index].description.toString();
-                                  addTaskcontroller.dateInputController.text = homeController.tasklist[index].date.toString();
-                                  addTaskcontroller.timeInputController.text = homeController.tasklist[index].time.toString();
-                                  Get.to(
-                                    AddTaskScreen(
-                                      isEdit: true,
-                                      docId: homeController.tasklist[index].id.toString(),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(Icons.edit),
-                              ),
-                            ),
-                            Text(
-                              homeController.tasklist[index].time.toString(),
-                              style: TextStyle(
-                                  fontSize: 10.sp,
-                                  color: AppColors.primaryColor,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                        trailing: CircleAvatar(
+                          child: IconButton(
+                            onPressed: () async {
+                              if (googleAdsManager.interstitialAd != null) {
+                                googleAdsManager.interstitialAd!.show();
+                                googleAdsManager.InterstitialAds();
+                              }
+                              addTaskcontroller.taskAddController.text = homeController.tasklist[index].task.toString();
+                              addTaskcontroller.descriptionAddController.text = homeController.tasklist[index].description.toString();
+                              addTaskcontroller.dateInputController.text = homeController.tasklist[index].date.toString();
+                              addTaskcontroller.timeInputController.text = homeController.tasklist[index].time.toString();
+                              Get.to(
+                                AddTaskScreen(
+                                  isEdit: true,
+                                  docId: homeController.tasklist[index].id.toString(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.edit),
+                          ),
                         ),
                       ),
                     ),
@@ -179,9 +187,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.to(const AddTaskScreen(
-          isEdit: false,
-        )),
+        onPressed: () {
+          addTaskcontroller.taskAddController.clear();
+          addTaskcontroller.descriptionAddController.clear();
+          addTaskcontroller.dateInputController.clear();
+          addTaskcontroller.timeInputController.clear();
+          Get.to(const AddTaskScreen(
+            isEdit: false,
+          ));
+         },
         child: const Icon(Icons.add),
       ),
     );

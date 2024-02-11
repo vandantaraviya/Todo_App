@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo_app/Screens/Auth/SplashScreen/splash_screen.dart';
-import 'package:todo_app/utils/Common/app_string.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'Services/Pref_Res.dart';
 import 'firebase_options.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     return Sizer(
       builder:(context, orientation, deviceType) => GetMaterialApp(
         theme: ThemeData(
-          primarySwatch: AppColors.primaryColor,
+         primaryColor: Colors.indigo,
         ),
         home: const SplashScreen(),
         debugShowCheckedModeBanner: false,

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/Services/ads_manger.dart';
 import '../../Services/Pref_Res.dart';
 import '../../utils/Common/app_string.dart';
 import '../HomeScreen/home_controller.dart';
@@ -25,6 +26,7 @@ class AddTaskcontroller extends GetxController{
     print(userId);
     try {
       isAddLoading.value = true;
+      await AdManager.showRewardedAd();
       firestore.collection(AppString.userCollection).doc(userId).collection(AppString.taskCollection).add({
         "task": taskAddController.text,
         "description": descriptionAddController.text,
@@ -32,7 +34,7 @@ class AddTaskcontroller extends GetxController{
         "time":  timeInputController.text,
         "id": "",
       }).then(
-        (value) {
+        (value) async {
           firestore.collection(AppString.userCollection).doc(userId).collection(AppString.taskCollection).doc(value.id).update({
             "id": value.id,
           });
