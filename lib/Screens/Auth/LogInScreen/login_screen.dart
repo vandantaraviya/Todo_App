@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import 'dart:io' show Platform;
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-=======
->>>>>>> dcee5ab944bbad637504612548d6088c380775c2
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
@@ -32,14 +27,10 @@ class _LogInScreenState extends State<LogInScreen> {
   Map<String, dynamic>? userData;
   AccessToken? accessToken;
   bool checking = true;
-<<<<<<< HEAD
   AdRequest? adRequest;
   BannerAd? bannerAd;
   InterstitialAd? interstitialAd;
   RewardedAd? rewardedAd;
-=======
-
->>>>>>> dcee5ab944bbad637504612548d6088c380775c2
 
   _login() async {
     try {
@@ -62,8 +53,6 @@ class _LogInScreenState extends State<LogInScreen> {
     }
   }
 
-<<<<<<< HEAD
-=======
   @override
   void initState() {
     // TODO: implement initState
@@ -71,7 +60,6 @@ class _LogInScreenState extends State<LogInScreen> {
     googleAdsManager.RewardedAds();
     googleAdsManager.InterstitialAds();
   }
->>>>>>> dcee5ab944bbad637504612548d6088c380775c2
 
   @override
   void dispose() {
@@ -93,7 +81,6 @@ class _LogInScreenState extends State<LogInScreen> {
           automaticallyImplyLeading: false,
           title: const Text("LogIn Screen",style: TextStyle(color: Colors.white),),
           centerTitle: true,
-<<<<<<< HEAD
           actions: [
             IconButton(
                 onPressed: (){
@@ -123,8 +110,6 @@ class _LogInScreenState extends State<LogInScreen> {
                   );
                 }, icon: Icon(Icons.add),),
           ],
-=======
->>>>>>> dcee5ab944bbad637504612548d6088c380775c2
         ),
         body: Obx(() {
           return SingleChildScrollView(
